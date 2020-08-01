@@ -1,10 +1,15 @@
 package com.br.lughtech.dominio;
 
+import java.io.Serializable;
+
+import com.br.lughtech.EmailDto;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
-public class ObjetoEmail {
+public class ObjetoEmail implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	Email de;
 	Email para;
@@ -20,6 +25,14 @@ public class ObjetoEmail {
 		this.para = para;
 		this.assunto = assunto;
 		this.conteudo = conteudo;
+		this.mail = new Mail(this.de, this.assunto, this.para, this.conteudo);
+	}
+
+	public ObjetoEmail(EmailDto emailDto) {
+		this.de = new Email(emailDto.getDe());
+		this.para = new Email(emailDto.getPara());
+		this.assunto = emailDto.getAssunto();
+		this.conteudo = new Content("text/plain", emailDto.getConteudo());
 		this.mail = new Mail(this.de, this.assunto, this.para, this.conteudo);
 	}
 
@@ -55,14 +68,19 @@ public class ObjetoEmail {
 		this.conteudo = conteudo;
 	}
 
+	public Mail getMail() {
+		return mail;
+	}
+
+	public void setMail(Mail mail) {
+		this.mail = mail;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((assunto == null) ? 0 : assunto.hashCode());
-		result = prime * result + ((conteudo == null) ? 0 : conteudo.hashCode());
-		result = prime * result + ((de == null) ? 0 : de.hashCode());
-		result = prime * result + ((para == null) ? 0 : para.hashCode());
+		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
 		return result;
 	}
 
@@ -75,27 +93,17 @@ public class ObjetoEmail {
 		if (getClass() != obj.getClass())
 			return false;
 		ObjetoEmail other = (ObjetoEmail) obj;
-		if (assunto == null) {
-			if (other.assunto != null)
+		if (mail == null) {
+			if (other.mail != null)
 				return false;
-		} else if (!assunto.equals(other.assunto))
-			return false;
-		if (conteudo == null) {
-			if (other.conteudo != null)
-				return false;
-		} else if (!conteudo.equals(other.conteudo))
-			return false;
-		if (de == null) {
-			if (other.de != null)
-				return false;
-		} else if (!de.equals(other.de))
-			return false;
-		if (para == null) {
-			if (other.para != null)
-				return false;
-		} else if (!para.equals(other.para))
+		} else if (!mail.equals(other.mail))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ObjetoEmail [de=" + de.getEmail() + ", para=" + para.getEmail() + ", assunto=" + assunto + ", conteudo=" + conteudo.getValue() + "]";
 	}
 
 }
