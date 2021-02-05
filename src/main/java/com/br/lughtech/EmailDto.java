@@ -1,10 +1,6 @@
 package com.br.lughtech;
 
-import java.io.Serializable;
-
-public class EmailDto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class EmailDto {
 
 	String de;
 	String para;
@@ -52,6 +48,11 @@ public class EmailDto implements Serializable {
 
 	public void setConteudo(String conteudo) {
 		this.conteudo = conteudo;
+	}
+	
+	@Override
+	public String toString() {
+		return "EmailDto [de=" + de + ", para=" + para + ", assunto=" + assunto + ", conteudo=" + conteudo + "]";
 	}
 
 }
