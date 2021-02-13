@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -21,7 +22,13 @@ import org.springframework.data.redis.stream.StreamMessageListenerContainer.Stre
 import org.springframework.data.redis.stream.Subscription;
 
 @Configuration
-public class RedisConfig {
+public class ConfiguracaoRedis {
+
+	@Value("${redis.stream.port}")
+	private int redisPort;
+
+	@Value("${redis.stream.hostname}")
+	private String redisHostname;
 
 	@Autowired
 	private StreamListener<String, ObjectRecord<String, String>> streamListener;
@@ -31,8 +38,8 @@ public class RedisConfig {
 	@Bean
 	LettuceConnectionFactory lettuceConnectionFactory() {
 		RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-		config.setHostName("172.23.188.133");
-		config.setPort(6379);
+		config.setHostName(redisHostname);
+		config.setPort(redisPort);
 		return new LettuceConnectionFactory(config);
 	}
 

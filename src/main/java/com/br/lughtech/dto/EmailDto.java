@@ -1,4 +1,4 @@
-package com.br.lughtech;
+package com.br.lughtech.dto;
 
 public class EmailDto {
 

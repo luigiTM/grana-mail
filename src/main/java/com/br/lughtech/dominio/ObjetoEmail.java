@@ -2,7 +2,7 @@ package com.br.lughtech.dominio;
 
 import java.io.Serializable;
 
-import com.br.lughtech.EmailDto;
+import com.br.lughtech.dto.EmailDto;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
